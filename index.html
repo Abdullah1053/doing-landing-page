@@ -26,6 +26,69 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+    <style>
+        /* Dark mode styles */
+        :root {
+        --background-dark: #1a1a1a;
+        --text-dark: #ffffff;
+        }
+
+        .dark {
+        background-color: var(--background-dark);
+        color: var(--text-dark);
+        }
+
+        /* Dark mode transition */
+        .dark-transition {
+        transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+
+    <script>
+        // Dark mode toggle functionality
+        function initDarkMode() {
+        // Check for saved dark mode preference
+        const darkMode = localStorage.getItem('darkMode') === 'true';
+        
+        // Apply dark mode if saved preference exists
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Get toggle button
+        const toggleBtn = document.getElementById('darkModeToggle');
+        
+        // Add click handler
+        toggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        });
+
+        // Add transition class to enable smooth transitions
+        document.documentElement.classList.add('dark-transition');
+        }
+
+        // Initialize dark mode when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initDarkMode);
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+            colors: {
+                dark: {
+                DEFAULT: '#1a1a1a',
+                text: '#ffffff'
+                }
+            }
+            }
+        }
+        }
+    </script>
+
     <style>
         .lqd-outline-glow-effect-1 .lqd-outline-glow-inner {
             background: conic-gradient(from 290deg, hsl(var(--glow-color-secondary, 0 0% 100% / 0%)) 0%, hsl(198.24deg 100% 40%) 10%, hsl(var(--glow-color-secondary, 0 0% 100% / 0%)) 20%);
@@ -336,7 +399,7 @@
     </style>
 </head>
 
-<body class="group/body bg-background font-body text-foreground">
+<body class="group/body font-body text-foreground bg-white dark:bg-dark text-gray-900 dark:text-dark-text">
     <div class="pointer-events-none invisible fixed left-0 right-0 top-0 z-[99] opacity-0 transition-opacity"
         id="app-loading-indicator" x-data
         :class="{ 'opacity-0': !$store.appLoadingIndicator.showing, 'invisible': !$store.appLoadingIndicator.showing }">
@@ -430,6 +493,10 @@
             </div>
             <div class="flex basis-1/3 justify-end gap-2 max-lg:basis-2/3">
 
+                <button id="darkModeToggle" class="top-4 right-4 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-800 transition-colors">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                  </button>
                 <a class="relative inline-flex items-center rounded-lg border-2 border-white/10 px-4 py-2 font-medium text-white transition-all duration-300 hover:scale-105 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/5"
                     href="##">
                     تسجيل الدخول
@@ -661,15 +728,15 @@
         <div class="container">
             <header class="mx-auto mb-24 w-full text-center lg:w-4/5">
 
-                <h2 class="mb-7">
+                <h2 class="mb-7 text-gray-900 dark:text-dark-text">
                     دوينج تلبي كل متطلباتك
                 </h2>
-                <p class="m-0 mx-auto text-xl/7 lg:w-8/12">
+                <p class="m-0 mx-auto text-xl/7 lg:w-8/12 text-gray-900 dark:text-dark-text">
                     مهما كان مجال عملك يمكنك الاعتماد على دوينج ودعمها لمختلف المجالات
                 </p>
             </header>
 
-            <div class="relative w-full overflow-hidden rounded-3xl bg-black px-5 py-16 md:px-8 lg:pe-0 lg:ps-14">
+            <div class="relative w-full overflow-hidden rounded-3xl bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text px-5 py-16 md:px-8 lg:pe-0 lg:ps-14">
                 <figure
                     class="pointer-events-none absolute start-1/2 top-0 z-0 w-full max-w-none -translate-x-1/2 -translate-y-1/2"
                     aria-hidden="true">
@@ -681,7 +748,7 @@
                     <div class="lqd-tabs-triggers flex flex-col gap-12 lg:w-4/12">
                         <button data-target="#ai-text-generator" class="group/trigger text-start lqd-is-active">
                             <span
-                                class="flex items-center gap-6 text-[24px] font-normal group-[&.lqd-is-active]/trigger:text-white md:text-[32px]">
+                                class="flex items-center gap-6 text-[24px] font-normal text-gray-900 dark:text-dark-text md:text-[32px]">
                                 <span
                                     class="w-8 group-[&.lqd-is-active]/trigger:text-primary [&_svg]:h-auto [&_svg]:w-full">
                                     <i class="fa-solid fa-bag-shopping"></i>
@@ -819,8 +886,8 @@
             <div
                 class="grid grid-cols-3 justify-between gap-x-20 gap-y-14 max-lg:grid-cols-2 max-lg:gap-10 max-md:grid-cols-1">
                 <div class="transition-all hover:scale-105">
-                    <h5 class="mb-4 flex items-center gap-6">
-                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full">
+                    <h5 class="mb-4 flex items-center gap-6 text-gray-900 dark:text-dark-text">
+                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full text-gray-900 dark:text-dark-text">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" stroke="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -831,13 +898,13 @@
                         </span>
                         تجارتك تنمو بدون توقف
                     </h5>
-                    <p class="m-0 lg:ps-12">
+                    <p class="m-0 lg:ps-12 text-gray-900 dark:text-dark-text">
                         مع أدواتنا الذكية استهدف عملاءك بناءً على اهتماماتهم وسلوكهم، وأطلق حملاتك التسويقية.
                     </p>
                 </div>
                 <div class="transition-all hover:scale-105">
-                    <h5 class="mb-4 flex items-center gap-6">
-                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full">
+                    <h5 class="mb-4 flex items-center gap-6 text-gray-900 dark:text-dark-text">
+                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full text-gray-900 dark:text-dark-text">
                             <svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -846,13 +913,13 @@
                         </span>
                         توصيل طلباتك أسرع
                     </h5>
-                    <p class="m-0 lg:ps-12">
+                    <p class="m-0 lg:ps-12 text-gray-900 dark:text-dark-text">
                         بضغطة زر خلي عملاءك يستلموا طلباتهم بدون تأخير ، خيارات الشحن تحت إدارتك مع إمكانية تتبع
                         الطلبات. </p>
                 </div>
                 <div class="transition-all hover:scale-105">
-                    <h5 class="mb-4 flex items-center gap-6">
-                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full">
+                    <h5 class="mb-4 flex items-center gap-6 text-gray-900 dark:text-dark-text">
+                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full text-gray-900 dark:text-dark-text">
                             <svg width="19" height="19" viewBox="0 0 19 19" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -861,15 +928,15 @@
                         </span>
                         القرارات الصعبة صارت سهلة
                     </h5>
-                    <p class="m-0 lg:ps-12">
+                    <p class="m-0 lg:ps-12 text-gray-900 dark:text-dark-text">
                         تقارير تفصيلية ، تمكنك من تحليل أداء متجرك، تحديد نقاط القوة، لتحسين أداء تجارتك اعتمادًا على
                         معلومات دقيقة.
 
                     </p>
                 </div>
                 <div class="transition-all hover:scale-105">
-                    <h5 class="mb-4 flex items-center gap-6">
-                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full">
+                    <h5 class="mb-4 flex items-center gap-6 text-gray-900 dark:text-dark-text">
+                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full text-gray-900 dark:text-dark-text">
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -884,14 +951,14 @@
                         </span>
                         تجربة تصميم على مقاس طموحك
                     </h5>
-                    <p class="m-0 lg:ps-12">
+                    <p class="m-0 lg:ps-12 text-gray-900 dark:text-dark-text">
                         متجرك لوحتك، وأنت الفنان! مع ثيمات قابلة للتخصيص أضف لمساتك الخاصة بتصميم يُبرز هويتك التجارية.
 
                     </p>
                 </div>
                 <div class="transition-all hover:scale-105">
-                    <h5 class="mb-4 flex items-center gap-6">
-                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full">
+                    <h5 class="mb-4 flex items-center gap-6 text-gray-900 dark:text-dark-text">
+                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full text-gray-900 dark:text-dark-text">
                             <svg width="19" height="16" viewBox="0 0 19 16" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -901,14 +968,14 @@
                         وسائل الدفع بدون تعقيد
 
                     </h5>
-                    <p class="m-0 lg:ps-12">
+                    <p class="m-0 lg:ps-12 text-gray-900 dark:text-dark-text">
                         من التحويل إلى الدفع عند الاستلام، إلى المحافظ الإلكترونية، نوفر لك كل طرق الدفع التي تلبي
                         احتياجات عملائك.
                     </p>
                 </div>
                 <div class="transition-all hover:scale-105">
-                    <h5 class="mb-4 flex items-center gap-6">
-                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full">
+                    <h5 class="mb-4 flex items-center gap-6 text-gray-900 dark:text-dark-text">
+                        <span class="w-7 [&_svg]:h-auto [&_svg]:w-full text-gray-900 dark:text-dark-text">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -918,7 +985,7 @@
                         </span>
                         تحكم ذكي في مخزونك
                     </h5>
-                    <p class="m-0 lg:ps-12">
+                    <p class="m-0 lg:ps-12 text-gray-900 dark:text-dark-text">
                         ابقَى على اطلاع دائم بكل تفاصيل منتجاتك، تتبع كميات المنتجات، اعدّ تنبيهات للنقص في المخزون، وقم
                         بتصنيف منتجاتك.
                     </p>
@@ -931,7 +998,7 @@
         class="site-section transition-all duration-700 md:translate-y-8 md:opacity-0 [&.lqd-is-in-view]:translate-y-0 [&.lqd-is-in-view]:opacity-100"
         id="how-it-works">
         <div class="container">
-            <div class="relative w-full overflow-hidden rounded-3xl bg-black px-5 py-20 md:px-8 lg:px-20 lg:py-24">
+            <div class="relative w-full overflow-hidden rounded-3xl bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text px-5 py-20 md:px-8 lg:px-20 lg:py-24">
                 <figure
                     class="pointer-events-none absolute start-1/2 top-0 z-0 w-full max-w-none -translate-x-1/2 -translate-y-1/2"
                     aria-hidden="true">
@@ -946,7 +1013,7 @@
 
                 <div class="mb-24 flex flex-wrap items-end justify-between gap-y-5">
                     <div class="w-full lg:w-2/3 lg:pe-8">
-                        <h2>
+                        <h2 class="text-gray-900 dark:text-dark-text">
                             خطوات للبدأ في تجارتك الإلكترونية ، ولا أسهل !
 
                         </h2>
@@ -961,8 +1028,7 @@
                 </div>
 
                 <div class="grid-cols-3 grid gap-7 max-md:grid-cols-1">
-                    <div class="relative flex flex-col overflow-hidden rounded-3xl bg-cover bg-center px-10 py-10 text-white transition-all hover:-translate-y-1 hover:shadow-xl"
-                        style="background-color: #0d0d0d;   color: hsl(var(--heading-foreground)); ">
+                    <div class="relative flex flex-col overflow-hidden rounded-3xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text bg-center px-10 py-10 text-white transition-all hover:-translate-y-1 hover:shadow-xl">
                         <span class="absolute end-10 top-10 z-2 text-[18px] font-medium uppercase">
                             الخطوة 1
                         </span>
@@ -971,14 +1037,13 @@
                                 alt="Simply explain what your content is about and adjust settings according to your needs." />
                         </figure>
                         <div class="mt-auto text-xl/7">
-                            <p class="mb-0 mt-8">
+                            <p class="mb-0 mt-8 text-gray-900 dark:text-dark-text">
                                 قم بالتسجيل في منصة دوينج وأنشئ متجرك بكل سهولة وسرعة.
 
                             </p>
                         </div>
                     </div>
-                    <div class="relative flex flex-col overflow-hidden rounded-3xl bg-cover bg-center px-10 py-10 text-white transition-all hover:-translate-y-1 hover:shadow-xl"
-                        style="background-color: hsl(240deg 5.17% 12.12%);   color: white; ">
+                    <div class="relative flex flex-col overflow-hidden rounded-3xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text bg-center px-10 py-10 text-white transition-all hover:-translate-y-1 hover:shadow-xl">
                         <span class="absolute end-10 top-10 z-2 text-[18px] font-medium uppercase">
                             الخطوة 2
                         </span>
@@ -987,7 +1052,7 @@
                                 alt="Simply input some basic information or keywords about your brand or product, and let our AI algorithms do the rest." />
                         </figure>
                         <div class="mt-auto text-xl/7">
-                            <p class="mb-0 mt-8">
+                            <p class="mb-0 mt-8 text-gray-900 dark:text-dark-text">
                                 أضف منتجاتك مع صور جذابة وأوصاف احترافية ثم خصص تصميم المتجر .
                             </p>
                         </div>
@@ -1010,7 +1075,7 @@
                 </div>
 
                 <div class="mt-20 flex justify-center">
-                    تريد أن ترى؟ <a class="text-[#FCA7FF]" href="##">انضم إلى
+                    تريد أن ترى؟ <a class="text-purple-500" href="##">انضم إلى
                         دوينج</a>
                 </div>
             </div>
@@ -1023,42 +1088,42 @@
             <div
                 class="flex basis-full animate-marquee items-center justify-between gap-5 pe-5 [animation-duration:25s] lg:gap-[300px] lg:pe-[300px]">
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         عبايات وازياء
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         قطاع الجملة
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         مطاعم
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         صناعة محتوى
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         تقديم خدمات
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         منتجات رقمية
@@ -1068,42 +1133,42 @@
             <div
                 class="absolute start-0 top-0 flex animate-marquee-2 items-center justify-between gap-5 pe-5 [animation-duration:25s] lg:gap-[300px] lg:pe-[300px]">
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         جمعيات
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         مدونات
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         اتصالات
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         تجارة إلكترونية
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         اعمال
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         مدونة
@@ -1115,35 +1180,35 @@
             <div
                 class="flex basis-full animate-marquee-reverse items-center justify-between gap-5 pe-5 [animation-duration:30s] lg:gap-[300px] lg:pe-[300px]">
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         مطاعم
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         منظمات خيرية
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         المنتجات الغذائية
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         الخدمات الرقمية
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         الصناعات اليدوية
@@ -1151,7 +1216,7 @@
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-snug lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-snug lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         منتجات صحية وتجميلية
@@ -1161,42 +1226,42 @@
             <div
                 class="absolute start-0 top-0 flex animate-marquee-reverse-2 items-center justify-between gap-5 pe-5 [animation-duration:30s] lg:gap-[300px] lg:pe-[300px]">
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         المنتجات الزراعية
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         الخدمات اللوجستية
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         السياحة والسفر
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         أدوات الرياضة واللياقة
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         تجارة التجزئة
                     </span>
                 </h5>
                 <h5
-                    class="group/heading inline-flex rounded-2xl bg-[#111114] px-8 py-5 font-medium leading-tight lg:text-3xl">
+                    class="group/heading inline-flex rounded-2xl bg-stone-200 dark:bg-neutral-800 text-gray-900 dark:text-dark-text px-8 py-5 font-medium leading-tight lg:text-3xl">
                     <span
                         class="bg-gradient-to-r from-[#DBDADA] to-[#7A7878] bg-clip-text leading-tight text-transparent group-hover/heading:from-gradient-to group-hover/heading:to-gradient-from">
                         الصناعات اليدوية
@@ -1211,10 +1276,10 @@
         <div class="container">
             <header class="mx-auto mb-20 w-full text-center lg:w-4/5">
 
-                <h2 class="mb-7">
+                <h2 class="mb-7 text-gray-900 dark:text-dark-text">
                     قيمة استثنائية لتجارتك
                 </h2>
-                <p class="m-0 mx-auto text-xl/7 lg:w-9/12">
+                <p class="m-0 mx-auto text-gray-900 dark:text-dark-text text-xl/7 lg:w-9/12">
                     أدواتنا تدعمك في بناء تجربة مميزة تعزز ولاء العملاء ، تحقق لك مبيعات وتبنيّ لك مستقبل تجاري
                     استثنائي.
                 </p>
@@ -1230,10 +1295,10 @@
                         </figure>
 
                         <div class="w-full lg:w-5/12">
-                            <h3 class="mb-10">
+                            <h3 class="mb-10 text-gray-900 dark:text-dark-text">
                                 تجارة إلكترونية
                             </h3>
-                            <p class="mb-10">
+                            <p class="mb-10 text-gray-900 dark:text-dark-text">
                                 Securely process credit card or other electronic payment methods.
                             </p>
 
@@ -1253,7 +1318,7 @@
                                         ابدأ الآن مجانًا
                                     </span>
                                 </a>
-                                <a class="group/btn flex items-center gap-2 text-white transition-colors hover:text-primary"
+                                <a class="group/btn flex items-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-primary"
                                     href="index.html#templates">
                                     انضم الى منصة دوينج
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -1271,10 +1336,10 @@
                         </figure>
 
                         <div class="w-full lg:w-5/12">
-                            <h3 class="mb-10">
+                            <h3 class="mb-10 text-gray-900 dark:text-dark-text">
                                 اعمال
                             </h3>
-                            <p class="mb-10">
+                            <p class="mb-10 text-gray-900 dark:text-dark-text">
                                 Ability to understand and generate content in different languages.
                             </p>
 
@@ -1294,7 +1359,7 @@
                                         ابدأ الآن مجانًا
                                     </span>
                                 </a>
-                                <a class="group/btn flex items-center gap-2 text-white transition-colors hover:text-primary"
+                                <a class="group/btn flex items-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-primary"
                                     href="##">
                                     انضم الى منصة دوينج
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -1312,10 +1377,10 @@
                         </figure>
 
                         <div class="w-full lg:w-5/12">
-                            <h3 class="mb-10">
+                            <h3 class="mb-10 text-gray-900 dark:text-dark-text ">
                                 مطاعم
                             </h3>
-                            <p class="mb-10">
+                            <p class="mb-10 text-gray-900 dark:text-dark-text ">
                                 Ability to invite friends, and earn commission from their first purchase.
                             </p>
 
@@ -1335,7 +1400,7 @@
                                         ابدأ الآن مجانًا
                                     </span>
                                 </a>
-                                <a class="group/btn flex items-center gap-2 text-white transition-colors hover:text-primary"
+                                <a class="group/btn flex items-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-primary"
                                     href="index.html#templates">
                                     انضم الى منصة دوينج
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -1353,10 +1418,10 @@
                         </figure>
 
                         <div class="w-full lg:w-5/12">
-                            <h3 class="mb-10">
+                            <h3 class="mb-10 text-gray-900 dark:text-dark-text ">
                                 مدونة
                             </h3>
-                            <p class="mb-10">
+                            <p class="mb-10 text-gray-900 dark:text-dark-text ">
                                 Export generated content as plain text, PDF, Word or HTML easily.
                             </p>
 
@@ -1376,7 +1441,7 @@
                                         ابدأ الآن مجانًا
                                     </span>
                                 </a>
-                                <a class="group/btn flex items-center gap-2 text-white transition-colors hover:text-primary"
+                                <a class="group/btn flex items-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-primary"
                                     href="index.html#templates">
                                     انضم الى منصة دوينج
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -1394,10 +1459,10 @@
                         </figure>
 
                         <div class="w-full lg:w-5/12">
-                            <h3 class="mb-10">
+                            <h3 class="mb-10 text-gray-900 dark:text-dark-text ">
                                 منظمات خيرية
                             </h3>
-                            <p class="mb-10">
+                            <p class="mb-10 text-gray-900 dark:text-dark-text ">
                                 Access and mage support tickets from your dashboard.
                             </p>
 
@@ -1417,7 +1482,7 @@
                                         ابدأ الآن مجانًا
                                     </span>
                                 </a>
-                                <a class="group/btn flex items-center gap-2 text-white transition-colors hover:text-primary"
+                                <a class="group/btn flex items-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-primary"
                                     href="index.html#templates">
                                     انضم الى منصة دوينج
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -1429,7 +1494,7 @@
             </div>
 
             <div
-                class="lqd-tabs flex flex-wrap justify-between gap-3 rounded-3xl border border-white/5 p-2 lg:flex-nowrap lg:rounded-full">
+                class="lqd-tabs flex flex-wrap justify-between gap-3 rounded-3xl border border-white/3 p-2 lg:flex-nowrap lg:rounded-full">
 
                 <!-- <button data-target="#tools-advanced-dashboard"
                     class="group/trigger flex text-base max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105 lqd-is-active">
@@ -1437,24 +1502,24 @@
                 </button> -->
 
                 <button data-target="#tools-payment-gateways"
-                    class="group/trigger flex text-base max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105 lqd-is-active ">
+                    class="group/trigger flex text-gray-900 dark:text-dark-text max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-stone-200 [&.lqd-is-active]:text-gray-900 hover:text-gray-900 hover:scale-105 lqd-is-active ">
 
                     تجارة إلكترونية
                 </button>
                 <button data-target="#tools-multilingual"
-                    class="group/trigger flex text-base max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105">
+                    class="group/trigger flex text-gray-900 dark:text-dark-text max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-stone-200 [&.lqd-is-active]:text-gray-900 hover:text-gray-900 hover:scale-105">
                     اعمال
                 </button>
                 <button data-target="#tools-affiliate-system"
-                    class="group/trigger flex text-base max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105">
+                    class="group/trigger flex text-gray-900 dark:text-dark-text max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-stone-200 [&.lqd-is-active]:text-gray-900 hover:text-gray-900 hover:scale-105">
                     مطاعم
                 </button>
                 <button data-target="#tools-easy-export"
-                    class="group/trigger flex text-base max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105">
+                    class="group/trigger flex text-gray-900 dark:text-dark-text max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-stone-200 [&.lqd-is-active]:text-gray-900 hover:text-gray-900 hover:scale-105">
                     مدونة
                 </button>
                 <button data-target="#tools-support-platform"
-                    class="group/trigger flex text-base max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105 ">
+                    class="group/trigger flex text-gray-900 dark:text-dark-text max-sm:w-full px-3 py-3.5 rounded-full max-mdbasis-1/3 max-md:grow text-center justify-center transition-all md:px-8 [&.lqd-is-active]:bg-stone-200 [&.lqd-is-active]:text-gray-900 hover:text-gray-900 hover:scale-105 ">
                     منظمات خيرية
                 </button>
             </div>
@@ -1477,10 +1542,10 @@
         <div class="container">
             <header class="mx-auto mb-24 w-full text-center lg:w-4/5">
 
-                <h2 class="mb-12">
+                <h2 class="mb-12 text-gray-900 dark:text-dark-text">
                     المدونة.
                 </h2>
-                <a class="group/btn flex items-center justify-center gap-2 text-white transition-colors hover:text-primary"
+                <a class="group/btn flex items-center justify-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-cyan-500 hover:dark:text-cyan-500"
                     href="index.html#templates">
                     انضم الى منصة دوينج
                     <i class="fa-solid fa-chevron-left"></i>
@@ -1493,7 +1558,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1509,10 +1574,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Post Title Generator
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Get captivating post titles instantly with our title generator. Boost engagement and save
                             time.
                         </p>
@@ -1521,7 +1586,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1531,7 +1596,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1547,10 +1612,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Summarize Text
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Effortlessly condense large text into shorter summaries. Save time and increase
                             productivity.
                         </p>
@@ -1559,7 +1624,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1569,7 +1634,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1586,10 +1651,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Product Description
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Easily create compelling product descriptions that sell. Increase conversions and boost
                             sales.
                         </p>
@@ -1598,7 +1663,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i>
                         </a>
@@ -1609,7 +1674,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1626,10 +1691,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Article Generator
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Instantly create unique articles on any topic. Boost engagement, improve SEO, and save time.
                         </p>
                     </div>
@@ -1637,7 +1702,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1647,7 +1712,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1664,10 +1729,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Product Name Generator
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Create catchy product names with ease. Attract customers and boost sales effortlessly.
                         </p>
                     </div>
@@ -1675,7 +1740,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1685,7 +1750,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1702,10 +1767,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Testimonial Review
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Instantly generate authentic testimonials. Build trust and credibility with genuine reviews.
                         </p>
                     </div>
@@ -1713,7 +1778,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1723,7 +1788,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1740,10 +1805,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Problem Agitate Solution
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Identify and solve problems efficiently. Streamline solutions and increase productivity.
                         </p>
                     </div>
@@ -1751,7 +1816,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1761,7 +1826,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1778,10 +1843,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Blog Section
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Effortlessly create blog sections with AI. Get unique, engaging content and save time.
                         </p>
                     </div>
@@ -1789,7 +1854,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1799,7 +1864,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1816,10 +1881,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Blog Post Ideas
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Unlock your creativity with unique blog post ideas. Generate endless inspiration and take
                             your content to the next level.
                         </p>
@@ -1828,7 +1893,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1838,7 +1903,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1854,10 +1919,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Blog Intros
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Set the tone for your blog post with captivating intros. Grab readers&#039; attention and
                             keep them engaged.
                         </p>
@@ -1866,7 +1931,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1876,7 +1941,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1892,10 +1957,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Blog Conclusion
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             End your blog posts on a high note. Craft memorable conclusions that leave a lasting impact.
                         </p>
                     </div>
@@ -1903,7 +1968,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1913,7 +1978,7 @@
                     <div
                         class="pointer-events-none absolute inset-x-0 -top-20 bottom-0 z-0 overflow-hidden rounded-3xl p-0.5 transition-all duration-300 group-hover:shadow-[0_5px_75px_hsl(var(--primary)/10%)] group-hover:delay-200">
                         <div
-                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-black transition-all duration-300 group-hover:translate-y-0">
+                            class="absolute inset-[1px] translate-y-20 rounded-3xl bg-stone-200 dark:bg-black text-gray-900 dark:text-dark-text transition-all duration-300 group-hover:translate-y-0">
                             <span
                                 class="lqd-outline-glow absolute inline-block rounded-[inherit] pointer-events-none overflow-hidden lqd-outline-glow-effect-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
                                 <span
@@ -1932,10 +1997,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Facebook Ads
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Create high-converting Facebook ads that grab attention. Drive sales and grow your business.
                         </p>
                     </div>
@@ -1943,7 +2008,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -1972,10 +2037,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="mb-6">
+                        <h5 class="mb-6 text-gray-900 dark:text-dark-text">
                             Youtube Video Description
                         </h5>
-                        <p class="mb-10">
+                        <p class="mb-10 text-gray-900 dark:text-dark-text">
                             Elevate your YouTube content with compelling video descriptions. Generate engaging
                             descriptions effortlessly and increase views.
                         </p>
@@ -1984,7 +2049,7 @@
                     <div
                         class="group/link absolute bottom-0 end-10 start-10 z-1 flex h-20 -translate-y-20 items-center overflow-hidden transition-all duration-300 group-hover:translate-y-0">
 
-                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:text-primary group-hover:translate-y-0"
+                        <a class="flex h-full w-full translate-y-20 items-center justify-between gap-2 border-t border-white/20 text-sm font-semibold text-gray-900 dark:text-dark-text transition-all duration-300 hover:text-cyan-500 hover:dark:text-cyan-500 group-hover:translate-y-0"
                             href="index.html#">
                             Learn more <i class="fa-solid fa-chevron-left"></i> </a>
                     </div>
@@ -3313,7 +3378,7 @@
             </div>
 
             <div class="mt-24 text-center">
-                <a class="group/btn flex items-center justify-center gap-2 text-white transition-colors hover:text-primary"
+                <a class="group/btn flex items-center justify-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-cyan-500 hover:dark:text-cyan-500"
                     href="index.html#"
                     @click.prevent="showMore = !showMore; setTimeout(() => { !showMore && window.scrollTo({ top: ($el.getBoundingClientRect().top + window.scrollY) - ( window.innerHeight / 2 ), behavior: 'instant' }) }, 10 )">
                     <span :class="{ 'hidden': showMore }">
@@ -3332,7 +3397,7 @@
         class="site-section py-24 transition-all duration-700 md:translate-y-8 md:opacity-0 [&.lqd-is-in-view]:translate-y-0 [&.lqd-is-in-view]:opacity-100"
         id="testimonials">
         <div class="container">
-            <div class="relative w-full overflow-hidden rounded-3xl bg-black px-5 py-20 md:px-8 lg:px-20 lg:py-24">
+            <div class="relative w-full overflow-hidden rounded-3xl bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text px-5 py-20 md:px-8 lg:px-20 lg:py-24">
                 <figure
                     class="pointer-events-none absolute start-1/2 top-0 z-0 w-full max-w-none -translate-x-1/2 -translate-y-1/2"
                     aria-hidden="true">
@@ -3340,16 +3405,16 @@
                         alt="Glowing blob" />
                 </figure>
 
-                <header class="mb-24 flex flex-wrap items-end justify-between gap-y-5 [&_strong]:text-white/70">
+                <header class="mb-24 flex flex-wrap items-end justify-between gap-y-5  text-gray-900 dark:text-dark-text">
                     <div class="w-full lg:w-2/3 lg:pe-8">
 
-                        <h2>
+                        <h2 class="text-gray-900 dark:text-dark-text">
                             ثقة من الآلاف.
                         </h2>
                     </div>
 
                     <div class="w-full lg:w-1/3">
-                        <p class="mb-6">
+                        <p class="mb-6 text-gray-900 dark:text-dark-text">
                             <strong>يثق بنا أكثر من +1000 تاجر </strong>
 
                         </p>
@@ -3374,8 +3439,8 @@
                                 </span>
                             </figure>
                             <div class="whitespace-nowrap  transition-all group-[&.is-nav-selected]:opacity-100">
-                                <p class="mb-1 text-lg text-heading-foreground">+20</p>
-                                <p class="text-base text-heading-foreground/50">قطاع تجاري مختلف</p>
+                                <p class="mb-1 text-lg text-gray-900 dark:text-dark-text">+20</p>
+                                <p class="text-base text-gray-900 dark:text-dark-text">قطاع تجاري مختلف</p>
                             </div>
                         </div>
                         <div
@@ -3392,8 +3457,8 @@
                                 </span>
                             </figure>
                             <div class="whitespace-nowrap  transition-all group-[&.is-nav-selected]:opacity-100">
-                                <p class="mb-1 text-lg text-heading-foreground"> +20</p>
-                                <p class="text-base text-heading-foreground/50">مزود خدمة</p>
+                                <p class="mb-1 text-lg text-gray-900 dark:text-dark-text"> +20</p>
+                                <p class="text-base text-gray-900 dark:text-dark-text">مزود خدمة</p>
                             </div>
                         </div>
                         <div
@@ -3409,8 +3474,8 @@
                                 </span>
                             </figure>
                             <div class="whitespace-nowrap transition-all group-[&.is-nav-selected]:opacity-100">
-                                <p class="mb-1 text-lg text-heading-foreground">24/7</p>
-                                <p class="text-base text-heading-foreground/50">دعم للتجار</p>
+                                <p class="mb-1 text-lg text-gray-900 dark:text-dark-text">24/7</p>
+                                <p class="text-base text-gray-900 dark:text-dark-text">دعم للتجار</p>
                             </div>
                         </div>
                         <div
@@ -3427,8 +3492,8 @@
                                 </span>
                             </figure>
                             <div class="whitespace-nowrap  transition-all group-[&.is-nav-selected]:opacity-100">
-                                <p class="mb-1 text-lg text-heading-foreground">متجر فعال على دوينج</p>
-                                <p class="text-base text-heading-foreground/50">+1000متجر</p>
+                                <p class="mb-1 text-lg text-gray-900 dark:text-dark-text">متجر فعال على دوينج</p>
+                                <p class="text-base text-gray-900 dark:text-dark-text">+1000متجر</p>
                             </div>
                         </div>
                         <div
@@ -3445,8 +3510,8 @@
                             </figure>
                             <div
                                 class="whitespace-nowrap opacity-0 transition-all group-[&.is-nav-selected]:opacity-100">
-                                <p class="mb-1 text-lg text-heading-foreground">Tom Daniel</p>
-                                <p class="text-base text-heading-foreground/50">Writer</p>
+                                <p class="mb-1 text-lg text-gray-900 dark:text-dark-text">Tom Daniel</p>
+                                <p class="text-base text-gray-900 dark:text-dark-text">Writer</p>
                             </div>
                         </div>
                         <div
@@ -3462,8 +3527,8 @@
                                 </span>
                             </figure>
                             <div class="whitespace-nowrap transition-all group-[&.is-nav-selected]:opacity-100">
-                                <p class="mb-1 text-lg text-heading-foreground">Eric Sanchez</p>
-                                <p class="text-base text-heading-foreground/50">UX Designer</p>
+                                <p class="mb-1 text-lg text-gray-900 dark:text-dark-text">Eric Sanchez</p>
+                                <p class="text-base text-gray-900 dark:text-dark-text">UX Designer</p>
                             </div>
                         </div>
                     </div>
@@ -3535,23 +3600,23 @@
         <div class="container">
             <header class="mx-auto mb-14 w-full text-center lg:w-4/5">
 
-                <h2 class="mb-7">
+                <h2 class="mb-7 text-gray-900 dark:text-dark-text">
                     باقات المنصة
                 </h2>
-                <p class="mx-auto mb-4 text-xl/7 lg:w-9/12">
+                <p class="mx-auto mb-4  text-gray-900 dark:text-dark-text text-xl/7 lg:w-9/12">
                     باقات مصممة خصيصًا لتتناسب مع تطلعات وإمكانية كل تاجر، اختر الي يناسبك وانطلق مع متجر إلكتروني
                     متكامل </p>
             </header>
 
             <div class="lqd-tabs flex flex-wrap justify-center">
                 <div
-                    class="lqd-tabs-triggers mx-auto mb-24 inline-flex flex-wrap justify-between gap-3 rounded-2xl border border-white/5 p-2 max-sm:w-full md:rounded-full">
+                    class="lqd-tabs-triggers mx-auto mb-24 inline-flex flex-wrap justify-between gap-3 rounded-2xl border border-white/3 p-2 max-sm:w-full md:rounded-full">
                     <button data-target="#pricing-monthly"
-                        class="group/trigger flex relative max-sm:grow text-center justify-center text-base gap-2 px-3 py-3.5 rounded-full transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105 lqd-is-active">
+                        class="group/trigger flex relative max-sm:grow text-center justify-center text-base gap-2 px-3 py-3.5 rounded-full transition-all md:px-8 [&.lqd-is-active]:bg-stone-200 [&.lqd-is-active]:text-gray-900 hover:text-gray-900 hover:scale-105 lqd-is-active">
                         شهري
                     </button>
                     <button data-target="#pricing-annual"
-                        class="group/trigger flex relative max-sm:grow text-center justify-center text-base gap-2 px-3 py-3.5 rounded-full transition-all md:px-8 [&.lqd-is-active]:bg-heading-foreground/10 [&.lqd-is-active]:text-heading-foreground hover:text-heading-foreground hover:scale-105">
+                        class="group/trigger flex relative max-sm:grow text-center justify-center text-base gap-2 px-3 py-3.5 rounded-full transition-all md:px-8 [&.lqd-is-active]:bg-stone-200 [&.lqd-is-active]:text-gray-900 hover:text-gray-900 hover:scale-105">
                         سنوي
                         <span
                             class="inline-block whitespace-nowrap sm:absolute sm:start-full sm:top-full sm:-ms-8 sm:-mt-3"
@@ -3578,18 +3643,18 @@
                         <div id="pricing-monthly">
                             <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
                                 <div
-                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-black">
+                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text">
                                     <h5 class="gradient-text relative mb-6 inline-block text-xs font-medium uppercase">
                                         الباقة المجانية " للبدأ "
                                     </h5>
 
                                     <p class="mb-7 text-sm">
                                         <span
-                                            class="align-sub font-heading text-[50px] font-bold leading-none text-heading-foreground">
+                                            class="align-sub font-heading text-[50px] font-bold leading-none  text-gray-900 dark:text-dark-text">
                                             0
                                         </span>
                                         <small
-                                            class="font-heading text-[24px] font-bold leading-none text-heading-foreground">
+                                            class="font-heading text-[24px] font-bold leading-none  text-gray-900 dark:text-dark-text">
                                             ريال
                                         </small>
 
@@ -3599,7 +3664,7 @@
 
                                     <hr class="w-full">
 
-                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-heading-foreground">
+                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-gray-900 dark:text-dark-text">
                                         <li class="group flex items-center">
                                             <span
                                                 class="size-7 me-5 inline-grid shrink-0 place-content-center rounded-full bg-secondary text-secondary-foreground transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
@@ -3684,18 +3749,18 @@
 
                                 </div>
                                 <div
-                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-black">
+                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text">
                                     <h5 class="gradient-text relative mb-6 inline-block text-xs font-medium uppercase">
                                         الباقة المتقدمة " لنمو التجار "
                                     </h5>
 
                                     <p class="mb-7 text-sm">
                                         <span
-                                            class="align-sub font-heading text-[50px] font-bold leading-none text-heading-foreground">
+                                            class="align-sub font-heading text-[50px] font-bold leading-none text-gray-900 dark:text-dark-text">
                                             16600
                                         </span>
                                         <small
-                                            class="font-heading text-[24px] font-bold leading-none text-heading-foreground">
+                                            class="font-heading text-[24px] font-bold leading-none text-gray-900 dark:text-dark-text">
                                             ريال
                                         </small>
 
@@ -3705,7 +3770,7 @@
 
                                     <hr class="w-full">
 
-                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-heading-foreground">
+                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-gray-900 dark:text-dark-text">
                                         <li class="group flex items-center">
                                             <span
                                                 class="size-7 me-5 inline-grid shrink-0 place-content-center rounded-full bg-secondary text-secondary-foreground transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
@@ -3790,7 +3855,7 @@
 
                                 </div>
                                 <div
-                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-[#0d0d0d]">
+                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text bg-[#0d0d0d]">
                                     <h5 class="gradient-text relative mb-6 inline-block text-xs font-medium uppercase">
                                         الباقة الاحترافية "لتُجار الأعمال الكبرى "
                                     </h5>
@@ -3798,11 +3863,11 @@
                                     <p class="mb-7 text-sm">
 
                                         <span
-                                            class="align-sub font-heading text-[50px] font-bold leading-none text-heading-foreground">
+                                            class="align-sub font-heading text-[50px] font-bold leading-none text-gray-900 dark:text-dark-text">
                                             44000
                                         </span>
                                         <small
-                                            class="font-heading text-[24px] font-bold leading-none text-heading-foreground">
+                                            class="font-heading text-[24px] font-bold leading-none text-gray-900 dark:text-dark-text">
                                             ريال
                                         </small>
 
@@ -3812,7 +3877,7 @@
 
                                     <hr class="w-full">
 
-                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-heading-foreground">
+                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-gray-900 dark:text-dark-text">
                                         <li class="group flex items-center">
                                             <span
                                                 class="size-7 me-5 inline-grid shrink-0 place-content-center rounded-full bg-secondary text-secondary-foreground transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
@@ -3957,18 +4022,18 @@
                         <div class="hidden" id="pricing-annual">
                             <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
                                 <div
-                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-[#0d0d0d]">
+                                    class="relative flex flex-col items-start rounded-3xl px-10 py-10 text-start transition-all md:hover:-translate-y-1 md:hover:scale-[1.025] lg:py-12 bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text bg-[#0d0d0d]">
                                     <h5 class="gradient-text relative mb-6 inline-block text-xs font-medium uppercase">
                                         Basic
                                     </h5>
 
                                     <p class="mb-7 text-sm">
                                         <small
-                                            class="font-heading text-[24px] font-bold leading-none text-heading-foreground">
+                                            class="font-heading text-[24px] font-bold leading-none text-gray-900 dark:text-dark-text">
                                             $
                                         </small>
                                         <span
-                                            class="align-sub font-heading text-[50px] font-bold leading-none text-heading-foreground">
+                                            class="align-sub font-heading text-[50px] font-bold leading-none text-gray-900 dark:text-dark-text">
                                             399
                                         </span>
                                         /
@@ -3977,7 +4042,7 @@
 
                                     <hr class="w-full">
 
-                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-heading-foreground">
+                                    <ul class="mb-12 mt-8 flex flex-col gap-6 text-base text-gray-900 dark:text-dark-text">
                                         <li class="group flex items-center">
                                             <span
                                                 class="size-7 me-5 inline-grid shrink-0 place-content-center rounded-full bg-secondary text-secondary-foreground transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
@@ -4067,7 +4132,7 @@
         id="faq">
         <div class="container">
             <div
-                class="relative w-full overflow-hidden rounded-3xl bg-black px-5 py-20 md:px-8 lg:flex lg:min-h-[70vh] lg:items-center lg:px-20 lg:py-36">
+                class="relative w-full overflow-hidden rounded-3xl bg-stone-100 dark:bg-black text-gray-900 dark:text-dark-text px-5 py-20 md:px-8 lg:flex lg:min-h-[70vh] lg:items-center lg:px-20 lg:py-36">
                 <figure
                     class="pointer-events-none absolute start-1/2 top-0 z-0 w-full max-w-none -translate-x-1/2 -translate-y-1/2"
                     aria-hidden="true">
@@ -4093,25 +4158,25 @@
                                 <path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
                             </svg> الأسئلة المتداولة
                         </h6>
-                        <h2 class="mb-7">
+                        <h2 class="mb-7 text-gray-900 dark:text-dark-text">
                             هل لديك سؤال؟
                         </h2>
-                        <p class="m-0">
+                        <p class="m-0 text-gray-900 dark:text-dark-text">
                             "فريق الدعم لدينا جاهز لمساعدتك في أي استفسار يتعلق بإنشاء وإدارة متجرك الإلكتروني. نقدم
                             إرشادات مخصصة لضمان نجاح أعمالك بكل سهولة."
                         </p>
                     </header>
 
                     <div class="lqd-accordion flex w-full flex-col gap-7 lg:w-6/12">
-                        <div class="lqd-accordion-item group relative rounded-lg bg-black px-7">
+                        <div class="lqd-accordion-item group relative rounded-lg bg-stone-300 dark:bg-black px-7">
                             <button
                                 class="group/btn peer flex w-full items-center justify-between py-7 text-start text-xl font-normal"
                                 data-target="#faq-1" data-trigger-type="accordion">
                                 <span
-                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
+                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-gray-900 dark:text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
                                     كيف أبدأ في إنشاء متجري الإلكتروني؟
                                 </span>
-                                <div class="ms-3 text-primary">
+                                <div class="ms-3 text-gray-900 dark:text-cyan-500">
                                     <span class="group-[&.lqd-is-active]/btn:hidden">
                                         <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -4142,15 +4207,15 @@
                             </div>
 
                         </div>
-                        <div class="lqd-accordion-item group relative rounded-lg bg-black px-7">
+                        <div class="lqd-accordion-item group relative rounded-lg bg-stone-300 dark:bg-black px-7">
                             <button
-                                class="group/btn peer flex w-full items-center justify-between py-7 text-start text-xl font-normal"
+                                class="group/btn peer flex w-full items-center justify-between py-7 text-start text-gray-900 dark:text-dark-text text-xl font-normal"
                                 data-target="#faq-2" data-trigger-type="accordion">
                                 <span
-                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
+                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-gray-900 dark:text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
                                     هل من السهل انشاء موقع الكتروني؟
                                 </span>
-                                <div class="ms-3 text-primary">
+                                <div class="ms-3 text-gray-900 dark:text-cyan-500">
                                     <span class="group-[&.lqd-is-active]/btn:hidden">
                                         <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -4186,16 +4251,16 @@
                             </div>
 
                         </div>
-                        <div class="lqd-accordion-item group relative rounded-lg bg-black px-7">
+                        <div class="lqd-accordion-item group relative rounded-lg bg-stone-300 dark:bg-black px-7">
                             <button
                                 class="group/btn peer flex w-full items-center justify-between py-7 text-start text-xl font-normal"
                                 data-target="#faq-3" data-trigger-type="accordion">
                                 <span
-                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
+                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-gray-900 dark:text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
 
                                     ما هي أفضل خطة تناسب احتياجاتي؟
                                 </span>
-                                <div class="ms-3 text-primary">
+                                <div class="ms-3 text-gray-900 dark:text-cyan-500">
                                     <span class="group-[&.lqd-is-active]/btn:hidden">
                                         <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -4227,15 +4292,15 @@
                             </div>
 
                         </div>
-                        <div class="lqd-accordion-item group relative rounded-lg bg-black px-7">
+                        <div class="lqd-accordion-item group relative rounded-lg bg-stone-300 dark:bg-black px-7">
                             <button
                                 class="group/btn peer flex w-full items-center justify-between py-7 text-start text-xl font-normal"
                                 data-target="#faq-4" data-trigger-type="accordion">
                                 <span
-                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
+                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-gray-900 dark:text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
                                     هل يمكنني شراء نطاق خاص بي؟
                                 </span>
-                                <div class="ms-3 text-primary">
+                                <div class="ms-3 text-gray-900 dark:text-cyan-500">
                                     <span class="group-[&.lqd-is-active]/btn:hidden">
                                         <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -4265,15 +4330,15 @@
                             </div>
 
                         </div>
-                        <div class="lqd-accordion-item group relative rounded-lg bg-black px-7" style="display: none;">
+                        <div class="lqd-accordion-item group relative rounded-lg bg-stone-300 dark:bg-black px-7" style="display: none;">
                             <button
                                 class="group/btn peer flex w-full items-center justify-between py-7 text-start text-xl font-normal"
                                 data-target="#faq-5" data-trigger-type="accordion">
                                 <span
-                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
+                                    class="inline-block bg-gradient-to-r from-heading-foreground to-heading-foreground bg-clip-text text-gray-900 dark:text-transparent group-[&.lqd-is-active]/btn:from-gradient-from group-[&.lqd-is-active]/btn:to-gradient-to">
                                     Is there a mobile app for MagicAI?
                                 </span>
-                                <div class="ms-3 text-primary">
+                                <div class="ms-3 text-gray-900 dark:text-cyan-500">
                                     <span class="group-[&.lqd-is-active]/btn:hidden">
                                         <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -4322,10 +4387,10 @@
                 <div class="mx-auto w-2/3 text-center max-lg:w-10/12 max-sm:w-full">
 
                     <p style="line-height: 2 !important;"
-                        class="-from-[5%] mb-10 inline-block bg-gradient-to-br from-heading-foreground from-30% to-heading-foreground/70 bg-clip-text font-heading text-[82px] font-bold leading-none tracking-tight text-transparent max-sm:text-[18vw]">
+                        class="-from-[5%] mb-10 inline-block bg-gradient-to-br from-heading-foreground from-30% to-heading-foreground/70 bg-clip-text font-heading text-[82px] font-bold leading-none tracking-tight text-gray-900 dark:text-transparent max-sm:text-[18vw]">
                         مستقبل تجاري متكامل في منصة واحدة
                     </p>
-                    <p class="mx-auto mb-12 w-full font-heading text-xl/7 text-heading-foreground/70 lg:w-8/12">
+                    <p class="mx-auto mb-12 w-full font-heading text-xl/7 text-gray-900 dark:text-dark-text text-heading-foreground/70 lg:w-8/12">
                         نُعد تجارتك لتواكب المستقبل، وقت أقل في الانضمام، نتائج أكبر عند البدء
                     </p>
                     <div class="flex flex-wrap items-center justify-center gap-8 text-sm">
@@ -4342,7 +4407,7 @@
                                 اطلق متجرك الآن
                             </span>
                         </a>
-                        <a class="group/btn flex items-center gap-2 text-white transition-colors hover:text-primary"
+                        <a class="group/btn flex items-center gap-2 text-gray-900 dark:text-dark-text transition-colors hover:text-cyan-500 hover:dark:text-cyan-500"
                             href="##" target="_blank">
                             انضم الى منصة دوينج
                             <i class="fa-solid fa-chevron-left"></i>
@@ -4369,7 +4434,7 @@
                             Developments in the sector
                         </span>
                     </a> -->
-                    <a class="group flex flex-col items-center rounded-2xl px-4 pb-8 pt-10 text-center leading-tight text-heading-foreground/50 transition-all hover:scale-105 hover:text-heading-foreground"
+                    <a class="group flex flex-col items-center rounded-2xl px-4 pb-8 pt-10 text-center leading-tight text-gray-900 dark:text-gray-200 transition-all hover:scale-105 hover:text-dark hover:dark:text-gray-50"
                         href="index.html#">
                         <span class="mb-8 block">
                             <i class="fa-brands fa-telegram" style="color: #30a6e0; font-size: 4rem; "></i>
@@ -4381,7 +4446,7 @@
                             Fast instant communication
                         </span>
                     </a>
-                    <a class="group flex flex-col items-center rounded-2xl px-4 pb-8 pt-10 text-center leading-tight text-heading-foreground/50 transition-all hover:scale-105 hover:text-heading-foreground"
+                    <a class="group flex flex-col items-center rounded-2xl px-4 pb-8 pt-10 text-center leading-tight text-gray-900 dark:text-gray-200 transition-all hover:scale-105 hover:text-dark hover:dark:text-gray-50"
                         href="index.html#">
                         <span class="mb-8 block">
                             <i class="fa-brands fa-square-x-twitter " style="color: #000000; font-size: 4em; "></i>
@@ -4393,7 +4458,7 @@
                             Latest news and updates
                         </span>
                     </a>
-                    <a class="group flex flex-col items-center rounded-2xl px-4 pb-8 pt-10 text-center leading-tight text-heading-foreground/50 transition-all hover:scale-105 hover:text-heading-foreground"
+                    <a class="group flex flex-col items-center rounded-2xl px-4 pb-8 pt-10 text-center leading-tight text-gray-900 dark:text-gray-200 transition-all hover:scale-105 hover:text-dark hover:dark:text-gray-50"
                         href="index.html#">
                         <span class="mb-8 block">
                             <i class="fa-brands fa-facebook" style="color: #0f609f; font-size: 4em; "></i>
